@@ -1,14 +1,17 @@
-const express = require('express');
-const { createServer } = require('http');
+//const express = require('express');
+//const { createServer } = require('http');
 const io = require('socket.io');
-const haiku = require('./haiku');
-
+const haiku = require('./lib/haiku.js');
+/*
 const app = express();
 const server = createServer(app);
+
+app.use('/', express.static(`${process.cwd()}/../client`));
+
+*/
 const userIds = {};
 const noop = () => {};
 
-app.use('/', express.static(`${process.cwd()}/../client`));
 
 /**
  * Random ID until the ID is not in use
@@ -68,9 +71,9 @@ function initSocket(socket) {
   return socket;
 }
 
-module.exports.run = (config) => {
-  server.listen(config.PORT);
-  console.log(`Server is listening at :${config.PORT}`);
+export default (server) => {
+  /*server.listen(config.PORT);
+  console.log(`Server is listening at :${config.PORT}`);*/
   io.listen(server, { log: true })
     .on('connection', initSocket);
 };
